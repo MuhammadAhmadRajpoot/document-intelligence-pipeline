@@ -1,0 +1,18 @@
+# Runtime dependencies (pinned; all ship CPU wheels for Python 3.12/3.13 on Windows and Linux)
+fastapi==0.143.2
+numpy==2.5.4
+onnxruntime==1.31.0
+openai==3.31.0
+opencv-python-headless==5.0.0.93
+openpyxl==3.1.5
+pillow==12.3.0
+pydantic==2.14.1
+pydantic-settings==2.16.0
+pymupdf==1.28.2
+python-dateutil==2.9.0.post0
+python-multipart==0.0.32
+rapidocr==3.10.0
+reportlab==5.0.1
+rich==15.0.0
+typer==0.27.3
+uvicorn==0.54.0
