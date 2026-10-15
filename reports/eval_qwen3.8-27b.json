@@ -1,0 +1,513 @@
+{
+  "overall": {
+    "documents": 28,
+    "field_accuracy": 0.996,
+    "fields_scored": 250,
+    "classification_accuracy": 1.0,
+    "documents_fully_correct": 0.9615,
+    "flagged_for_review": 0.0,
+    "review_recall_on_wrong_docs": 0.0,
+    "false_review_rate_on_correct_docs": 0.0,
+    "mean_latency_s": 47.97,
+    "mean_llm_extraction_attempts": 1
+  },
+  "by_variant": {
+    "digital": {
+      "documents": 15,
+      "field_accuracy": 1.0,
+      "fields_scored": 125,
+      "classification_accuracy": 1.0,
+      "documents_fully_correct": 1.0,
+      "flagged_for_review": 0.0,
+      "review_recall_on_wrong_docs": null,
+      "false_review_rate_on_correct_docs": 0.0,
+      "mean_latency_s": 44.32,
+      "mean_llm_extraction_attempts": 1
+    },
+    "scanned": {
+      "documents": 13,
+      "field_accuracy": 0.992,
+      "fields_scored": 125,
+      "classification_accuracy": 1.0,
+      "documents_fully_correct": 0.9231,
+      "flagged_for_review": 0.0,
+      "review_recall_on_wrong_docs": 0.0,
+      "false_review_rate_on_correct_docs": 0.0,
+      "mean_latency_s": 52.18,
+      "mean_llm_extraction_attempts": 1
+    }
+  },
+  "by_type": {
+    "invoice": {
+      "documents": 16,
+      "field_accuracy": 0.9938,
+      "fields_scored": 160,
+      "classification_accuracy": 1.0,
+      "documents_fully_correct": 0.9375,
+      "flagged_for_review": 0.0,
+      "review_recall_on_wrong_docs": 0.0,
+      "false_review_rate_on_correct_docs": 0.0,
+      "mean_latency_s": 50.41,
+      "mean_llm_extraction_attempts": 1
+    },
+    "other": {
+      "documents": 2,
+      "field_accuracy": null,
+      "fields_scored": 0,
+      "classification_accuracy": 1.0,
+      "documents_fully_correct": null,
+      "flagged_for_review": 0.0,
+      "review_recall_on_wrong_docs": null,
+      "false_review_rate_on_correct_docs": null,
+      "mean_latency_s": 35.98,
+      "mean_llm_extraction_attempts": 1
+    },
+    "receipt": {
+      "documents": 10,
+      "field_accuracy": 1.0,
+      "fields_scored": 90,
+      "classification_accuracy": 1.0,
+      "documents_fully_correct": 1.0,
+      "flagged_for_review": 0.0,
+      "review_recall_on_wrong_docs": null,
+      "false_review_rate_on_correct_docs": 0.0,
+      "mean_latency_s": 46.46,
+      "mean_llm_extraction_attempts": 1
+    }
+  },
+  "by_field": {
+    "currency": {
+      "accuracy": 1.0,
+      "n": 26,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "customer_name": {
+      "accuracy": 1.0,
+      "n": 16,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "due_date": {
+      "accuracy": 1.0,
+      "n": 16,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "invoice_date": {
+      "accuracy": 1.0,
+      "n": 16,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "invoice_number": {
+      "accuracy": 1.0,
+      "n": 16,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "line_items": {
+      "accuracy": 1.0,
+      "n": 26,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "merchant_name": {
+      "accuracy": 1.0,
+      "n": 10,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "receipt_number": {
+      "accuracy": 1.0,
+      "n": 10,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "subtotal": {
+      "accuracy": 1.0,
+      "n": 26,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "tax": {
+      "accuracy": 1.0,
+      "n": 26,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "tip": {
+      "accuracy": 1.0,
+      "n": 10,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "total": {
+      "accuracy": 1.0,
+      "n": 26,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "transaction_date": {
+      "accuracy": 1.0,
+      "n": 10,
+      "digital": 1.0,
+      "scanned": 1.0
+    },
+    "vendor_name": {
+      "accuracy": 0.9375,
+      "n": 16,
+      "digital": 1.0,
+      "scanned": 0.875
+    }
+  },
+  "documents": [
+    {
+      "file": "invoice_00_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 1.79,
+      "error": null
+    },
+    {
+      "file": "invoice_00_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 13.83,
+      "error": null
+    },
+    {
+      "file": "invoice_01_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 1.43,
+      "error": null
+    },
+    {
+      "file": "invoice_01_scanned.jpg",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 41.68,
+      "error": null
+    },
+    {
+      "file": "invoice_02_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 86.46,
+      "error": null
+    },
+    {
+      "file": "invoice_02_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 30.49,
+      "error": null
+    },
+    {
+      "file": "invoice_03_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 48.76,
+      "error": null
+    },
+    {
+      "file": "invoice_03_scanned.jpg",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 144.73,
+      "error": null
+    },
+    {
+      "file": "invoice_04_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 30.3,
+      "error": null
+    },
+    {
+      "file": "invoice_04_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 28.88,
+      "error": null
+    },
+    {
+      "file": "invoice_05_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 25.56,
+      "error": null
+    },
+    {
+      "file": "invoice_05_scanned.jpg",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 72.49,
+      "error": null
+    },
+    {
+      "file": "invoice_06_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 68.75,
+      "error": null
+    },
+    {
+      "file": "invoice_06_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 151.62,
+      "error": null
+    },
+    {
+      "file": "invoice_07_digital.pdf",
+      "variant": "digital",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 31.55,
+      "error": null
+    },
+    {
+      "file": "invoice_07_scanned.jpg",
+      "variant": "scanned",
+      "true_type": "invoice",
+      "predicted_type": "invoice",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [
+        "vendor_name"
+      ],
+      "latency_s": 28.22,
+      "error": null
+    },
+    {
+      "file": "receipt_00_digital.pdf",
+      "variant": "digital",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 26.97,
+      "error": null
+    },
+    {
+      "file": "receipt_00_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 18.33,
+      "error": null
+    },
+    {
+      "file": "receipt_01_digital.pdf",
+      "variant": "digital",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 63.5,
+      "error": null
+    },
+    {
+      "file": "receipt_01_scanned.jpg",
+      "variant": "scanned",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 26.47,
+      "error": null
+    },
+    {
+      "file": "receipt_02_digital.pdf",
+      "variant": "digital",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 130.57,
+      "error": null
+    },
+    {
+      "file": "receipt_02_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 26.32,
+      "error": null
+    },
+    {
+      "file": "receipt_03_digital.pdf",
+      "variant": "digital",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 24.91,
+      "error": null
+    },
+    {
+      "file": "receipt_03_scanned.jpg",
+      "variant": "scanned",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 25.33,
+      "error": null
+    },
+    {
+      "file": "receipt_04_digital.pdf",
+      "variant": "digital",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 52.25,
+      "error": null
+    },
+    {
+      "file": "receipt_04_scanned.pdf",
+      "variant": "scanned",
+      "true_type": "receipt",
+      "predicted_type": "receipt",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 69.92,
+      "error": null
+    },
+    {
+      "file": "letter_00_digital.pdf",
+      "variant": "digital",
+      "true_type": "other",
+      "predicted_type": "other",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 21.08,
+      "error": null
+    },
+    {
+      "file": "letter_01_digital.pdf",
+      "variant": "digital",
+      "true_type": "other",
+      "predicted_type": "other",
+      "needs_review": false,
+      "is_valid": true,
+      "attempts": 1,
+      "wrong_fields": [],
+      "latency_s": 50.88,
+      "error": null
+    }
+  ],
+  "run": {
+    "timestamp": "2026-10-15T17:31:53+00:00",
+    "model": "qwen/qwen3.8-27b",
+    "max_repair_attempts": 2,
+    "concurrency": 2,
+    "wall_time_s": 683.1,
+    "platform": "Windows 11 / Intel64 Family 6 Model 142 Stepping 9, GenuineIntel",
+    "python": "3.13.14"
+  }
+}
