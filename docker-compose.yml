@@ -1,0 +1,9 @@
+services:
+  docintel:
+    build: .
+    image: document-intelligence-pipeline:latest
+    ports:
+      - "8104:8104"
+    env_file:
+      - .env
+    restart: unless-stopped
