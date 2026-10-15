@@ -4,13 +4,17 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import threading
 import time
 from typing import Any, Literal, Protocol, TypedDict
 
-from openai import APIError, OpenAI
+from openai import APIError, OpenAI, RateLimitError
 
 logger = logging.getLogger(__name__)
+
+_RETRY_IN_RE = re.compile(r"try again in (?:(\d+)m)?([\d.]+)(ms|s)")
+MAX_BACKOFF_S = 60.0
 
 
 class ChatMessage(TypedDict):
@@ -34,6 +38,26 @@ class JSONLLMClient(Protocol):
         schema_name: str,
         json_schema: dict[str, Any] | None = None,
     ) -> dict[str, Any]: ...
+
+
+def rate_limit_wait_s(exc: RateLimitError, attempt: int) -> float:
+    """Seconds to wait after a 429: the server's hint if present, else exponential backoff.
+
+    The hint is returned uncapped so callers can tell a per-minute limit (seconds) from
+    an exhausted daily quota (minutes), which is not worth waiting for.
+    """
+    header = exc.response.headers.get("retry-after") if exc.response is not None else None
+    if header:
+        try:
+            return float(header) + 0.5
+        except ValueError:
+            pass
+    match = _RETRY_IN_RE.search(str(exc))
+    if match:
+        minutes, value, unit = match.groups()
+        seconds = float(value) / (1000 if unit == "ms" else 1) + 60 * int(minutes or 0)
+        return seconds + 0.5
+    return min(2.0**attempt, MAX_BACKOFF_S)
 
 
 def parse_json_object(content: str) -> dict[str, Any]:
@@ -62,12 +86,14 @@ class OpenAICompatibleClient:
         base_url: str = "https://api.groq.com/openai/v1",
         temperature: float = 0.0,
         timeout_s: float = 60.0,
-        max_retries: int = 4,
+        max_retries: int = 2,
+        rate_limit_retries: int = 8,
         response_format: Literal["json_object", "json_schema"] = "json_object",
     ) -> None:
         self.model = model
         self._temperature = temperature
         self._response_format = response_format
+        self._rate_limit_retries = rate_limit_retries
         self._client = OpenAI(
             api_key=api_key, base_url=base_url, timeout=timeout_s, max_retries=max_retries
         )
@@ -91,15 +117,25 @@ class OpenAICompatibleClient:
         json_schema: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         started = time.perf_counter()
-        try:
-            response = self._client.chat.completions.create(
-                model=self.model,
-                messages=messages,  # type: ignore[arg-type]
-                temperature=self._temperature,
-                response_format=self._format(schema_name, json_schema),  # type: ignore[arg-type]
-            )
-        except APIError as exc:
-            raise LLMError(f"LLM request failed: {exc}") from exc
+        for attempt in range(self._rate_limit_retries + 1):
+            try:
+                response = self._client.chat.completions.create(
+                    model=self.model,
+                    messages=messages,  # type: ignore[arg-type]
+                    temperature=self._temperature,
+                    response_format=self._format(schema_name, json_schema),  # type: ignore[arg-type]
+                )
+                break
+            except RateLimitError as exc:
+                if attempt == self._rate_limit_retries:
+                    raise LLMError(f"rate limited after {attempt + 1} tries: {exc}") from exc
+                wait = rate_limit_wait_s(exc, attempt)
+                if wait > MAX_BACKOFF_S:
+                    raise LLMError(f"LLM quota exhausted (retry in {wait:.0f}s): {exc}") from exc
+                logger.info("rate limited, backing off", extra={"wait_s": round(wait, 2)})
+                time.sleep(wait)
+            except APIError as exc:
+                raise LLMError(f"LLM request failed: {exc}") from exc
         usage = response.usage
         if usage is not None:
             with self._usage_lock:

@@ -20,6 +20,7 @@ from docintel.schemas import DocumentSchema, DocumentType
 from docintel.validation import Tolerance, validate_document
 
 logger = logging.getLogger(__name__)
+CLASSIFY_PROMPT_CHARS = 3000  # the start of a document is enough to tell its type
 
 
 class ConfigurationError(RuntimeError):
@@ -36,6 +37,7 @@ def build_llm(settings: Settings) -> OpenAICompatibleClient:
         temperature=settings.temperature,
         timeout_s=settings.llm_timeout_s,
         max_retries=settings.llm_max_retries,
+        rate_limit_retries=settings.llm_rate_limit_retries,
         response_format=settings.response_format,
     )
 
@@ -87,7 +89,7 @@ class Pipeline:
 
         t = time.perf_counter()
         if doc_type is None:
-            classification = classify_document(text, self.llm)
+            classification = classify_document(text[:CLASSIFY_PROMPT_CHARS], self.llm)
             doc_type, class_conf = classification.document_type, classification.confidence
         else:
             class_conf = 1.0

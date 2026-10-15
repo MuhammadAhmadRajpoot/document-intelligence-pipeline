@@ -26,7 +26,8 @@ class Settings(BaseSettings):
     model: str = "openai/gpt-oss-20b"
     temperature: float = Field(default=0.0, ge=0.0, le=2.0)
     llm_timeout_s: float = Field(default=60.0, gt=0)
-    llm_max_retries: int = Field(default=4, ge=0, description="HTTP-level retries (429/5xx).")
+    llm_max_retries: int = Field(default=2, ge=0, description="SDK retries for 5xx/timeouts.")
+    llm_rate_limit_retries: int = Field(default=8, ge=0, description="Back-off retries on 429.")
     response_format: Literal["json_object", "json_schema"] = "json_object"
     max_repair_attempts: int = Field(default=2, ge=0, le=5)
     max_prompt_chars: int = Field(default=12_000, gt=1000)

@@ -15,7 +15,7 @@ from difflib import SequenceMatcher
 from typing import Any
 
 from docintel.models import FieldEvidence, Page, Severity, TextLine, ValidationIssue
-from docintel.normalize import CURRENCY_SYMBOLS, canonical_text
+from docintel.normalize import CURRENCY_ALIASES, CURRENCY_SYMBOLS, canonical_text
 from docintel.schemas import DocumentSchema, GenericDocument, Invoice, Receipt
 
 UNGROUNDED_CONFIDENCE = 0.45
@@ -72,7 +72,8 @@ def _variants(name: str, value: Any) -> list[str]:
             return [value, *_date_variants(date.fromisoformat(value))]
     if name == "currency":
         symbols = [s for s, code in CURRENCY_SYMBOLS.items() if code == value]
-        return [str(value).lower(), *symbols]
+        aliases = [a.lower() for a in CURRENCY_ALIASES.get(str(value), ())]
+        return [str(value).lower(), *symbols, *aliases]
     return [canonical_text(value)]
 
 
@@ -105,6 +106,9 @@ def _row_label_text(page: Page, line: TextLine, variant: str) -> str:
 
 
 def _match_quality(variant: str, haystack: str) -> float:
+    if variant.isalpha() and len(variant) <= 4:
+        # Short codes ("usd", "rs") must be whole words, not parts of "hours" or "partners".
+        return 1.0 if re.search(rf"\b{re.escape(variant)}\b", haystack) else 0.0
     if variant in haystack:
         return 1.0
     if len(variant) < 6:

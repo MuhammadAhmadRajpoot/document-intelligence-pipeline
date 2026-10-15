@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Document Intelligence Pipeline</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">DI</span>
+      <div>
+        <h1>Document Intelligence</h1>
+        <p>Invoices &amp; receipts to validated JSON</p>
+      </div>
+    </div>
+    <div class="actions">
+      <label class="btn primary" for="file-input">Upload document</label>
+      <input id="file-input" type="file" accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp" multiple hidden />
+      <div class="export">
+        <button class="btn" data-export="json" disabled>JSON</button>
+        <button class="btn" data-export="csv" disabled>CSV</button>
+        <button class="btn" data-export="xlsx" disabled>Excel</button>
+      </div>
+    </div>
+  </header>
+
+  <nav id="history" class="history" aria-label="Processed documents"></nav>
+
+  <main class="layout">
+    <section class="panel preview-panel">
+      <div class="panel-head">
+        <h2 id="doc-name">No document</h2>
+        <div id="page-meta" class="muted"></div>
+      </div>
+      <div id="dropzone" class="dropzone">
+        <div id="preview" class="preview"></div>
+        <div id="drop-hint" class="drop-hint">Drop a PDF or image here</div>
+      </div>
+      <div id="page-tabs" class="page-tabs"></div>
+    </section>
+
+    <section class="panel result-panel">
+      <div id="status" class="status idle">Upload a document to start.</div>
+      <div class="summary" id="summary"></div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="fields">Fields</button>
+        <button class="tab" data-tab="items">Line items</button>
+        <button class="tab" data-tab="checks">Checks</button>
+        <button class="tab" data-tab="ocr">OCR text</button>
+        <button class="tab" data-tab="json">JSON</button>
+      </div>
+      <div class="tab-body" id="tab-fields"></div>
+      <div class="tab-body hidden" id="tab-items"></div>
+      <div class="tab-body hidden" id="tab-checks"></div>
+      <div class="tab-body hidden" id="tab-ocr"><pre id="ocr-text"></pre></div>
+      <div class="tab-body hidden" id="tab-json"><pre id="json-text"></pre></div>
+    </section>
+  </main>
+
+  <div id="busy" class="busy hidden"><div class="spinner"></div><span id="busy-text">Processing...</span></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

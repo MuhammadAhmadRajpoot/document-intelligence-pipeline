@@ -25,6 +25,8 @@ CURRENCY_SYMBOLS: dict[str, str] = {
     "US$": "USD",
     "$": "USD",
 }
+# Ambiguous local abbreviations that cannot live in CURRENCY_SYMBOLS (e.g. "Rs" is also INR).
+CURRENCY_ALIASES: dict[str, tuple[str, ...]] = {"PKR": ("Rs", "Rs.")}
 ISO_CURRENCIES: frozenset[str] = frozenset(
     [
         "USD",
@@ -118,8 +120,9 @@ def normalize_currency(value: object) -> str | None:
         return upper
     if text in CURRENCY_SYMBOLS:
         return CURRENCY_SYMBOLS[text]
-    if upper in {"RS", "RS.", "PKR."}:
-        return "PKR"
+    for code, aliases in CURRENCY_ALIASES.items():
+        if upper in {a.upper() for a in aliases}:
+            return code
     raise ValueError(f"unknown currency: {value!r}")
 
 
